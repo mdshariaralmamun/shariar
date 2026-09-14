@@ -188,7 +188,7 @@ export function Footer() {
           </div>
 
           <p className="text-xs text-muted-foreground/50 text-center md:text-right">
-            Built with Next.js, React Three Fiber, Supabase & AI
+            Built with Next.js, React Three Fiber, Supabase & AI · auto-deployed from GitHub
           </p>
         </div>
       </div>
