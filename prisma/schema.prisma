@@ -1,0 +1,269 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  image         String?
+  role          String    @default("user") // user, admin
+  linkedinUrl   String?
+  githubUrl     String?
+  twitterUrl    String?
+  bio           String?
+  title         String?   // Professional title
+  company       String?   // Current company
+  location      String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  projects      Project[]
+  comments      Comment[]
+  messages      Message[]   @relation("SentMessages")
+  receivedMessages Message[] @relation("ReceivedMessages")
+  sessions      Session[]
+  accounts      Account[]
+  blogPosts     BlogPost[]
+  notifications Notification[]
+  likes         Like[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String   @db.Text
+  shortDesc   String?
+  thumbnail   String?
+  category    String   // gas-piping, cleanroom, equipment, research, coordination
+  tags        String[]
+  featured    Boolean  @default(false)
+  published   Boolean  @default(true)
+
+  // 3D Model data
+  modelUrl    String?  // URL to .glb/.gltf file
+  modelData   Json?    // Inline 3D scene data
+
+  // Project details
+  client      String?
+  location    String?
+  startDate   DateTime?
+  endDate     DateTime?
+  duration    String?
+  role        String?  // Your role in the project
+  challenges  String?  @db.Text
+  solutions   String?  @db.Text
+  results     String?  @db.Text
+
+  // Technical specs
+  specifications Json?  // Key-value pairs for technical specs
+
+  // SEO
+  metaTitle   String?
+  metaDescription String?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  comments    Comment[]
+  views       View[]
+  likes       Like[]
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  parentId  String?
+  parent    Comment? @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies   Comment[] @relation("CommentReplies")
+
+  blogPostId String?
+  blogPost   BlogPost? @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+}
+
+model View {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String?
+  ip        String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@unique([projectId, ip, userAgent])
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([projectId, userId])
+}
+
+model Message {
+  id          String   @id @default(cuid())
+  content     String   @db.Text
+  read        Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  senderId    String
+  sender      User     @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+
+  receiverId  String
+  receiver    User     @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  type      String   // message, comment, like, mention
+  title     String
+  content   String
+  read      Boolean  @default(false)
+  link      String?
+  createdAt DateTime @default(now())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Skill {
+  id          String   @id @default(cuid())
+  name        String
+  category    String   // gas-piping, cleanroom, equipment, software, management
+  level       Int      // 1-5
+  icon        String?
+  description String?
+  featured    Boolean  @default(false)
+  order       Int      @default(0)
+}
+
+model Experience {
+  id          String   @id @default(cuid())
+  title       String
+  company     String
+  location    String?
+  startDate   DateTime
+  endDate     DateTime?
+  current     Boolean  @default(false)
+  description String   @db.Text
+  achievements String[] // Bullet points
+  technologies String[]
+  order       Int      @default(0)
+}
+
+model Education {
+  id          String   @id @default(cuid())
+  degree      String
+  institution String
+  location    String?
+  startDate   DateTime
+  endDate     DateTime?
+  description String?
+  order       Int      @default(0)
+}
+
+model Certification {
+  id          String   @id @default(cuid())
+  name        String
+  issuer      String
+  date        DateTime
+  expiryDate  DateTime?
+  credentialId String?
+  credentialUrl String?
+  order       Int      @default(0)
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String
+  content     String   @db.Text
+  coverImage  String?
+  published   Boolean  @default(false)
+  featured    Boolean  @default(false)
+  tags        String[]
+  metaTitle   String?
+  metaDescription String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  publishedAt DateTime?
+
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  comments    Comment[]
+}
+
+model SiteSettings {
+  id              String   @id @default("singleton")
+  siteName        String   @default("Portfolio")
+  siteDescription String
+  heroTitle       String
+  heroSubtitle    String
+  aboutText       String   @db.Text
+  contactEmail    String
+  linkedinUrl     String?
+  githubUrl       String?
+  twitterUrl      String?
+  googleAnalytics String?
+  updatedAt       DateTime @updatedAt
+}
