@@ -39,13 +39,13 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand Column */}
           <div className="lg:col-span-1">
-            <Link href="#home" className="flex items-center gap-2 text-xl font-bold gradient-text mb-4" aria-label="Sharair Portfolio Home">
+            <Link href="#home" className="flex items-center gap-2 text-xl font-bold gradient-text mb-4" aria-label="Shariar Portfolio Home">
               <svg className="h-8 w-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="2" />
                 <path d="M16 8V24M8 16H24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                 <circle cx="16" cy="16" r="6" stroke="currentColor" strokeWidth="1.5" />
               </svg>
-              <span>Sharair</span>
+              <span>Shariar</span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">
               {portfolioData.owner.summary.slice(0, 200)}...

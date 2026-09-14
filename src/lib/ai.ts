@@ -181,7 +181,7 @@ export async function portfolioChatAssistant(
     portfolioData?: any;
   } = {}
 ): Promise<string> {
-  const systemPrompt = `You are an AI assistant for ${context.portfolioData?.siteName || 'Sharair'} - a gas piping design engineer's portfolio website.
+  const systemPrompt = `You are an AI assistant for ${context.portfolioData?.siteName || 'Shariar'} - a gas piping design engineer's portfolio website.
 
 About the portfolio owner:
 - Name: ${context.portfolioData?.ownerName || 'Mohammed Mamun'}

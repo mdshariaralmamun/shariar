@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+.gitignore
+.env
+.env.*
+Dockerfile
+docker-compose*.yml
+deploy
+.github
+README.md
+npm-debug.log*
+*.md
+!prisma/*.md

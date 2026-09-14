@@ -328,7 +328,7 @@ export const portfolioData = {
   ],
 
   siteSettings: {
-    siteName: 'Sharair Portfolio',
+    siteName: 'Shariar Portfolio',
     siteDescription: 'High-Purity Piping Specialist & Orbital Welding QA/QC Technician | Gas Piping Design Engineer for Laboratories & Semiconductor Sector',
     heroTitle: 'Engineering Precision in Ultra-High Purity',
     heroSubtitle: '15+ years delivering defect-free UHP gas distribution, cleanroom utilities, and semiconductor tool installations for world-class research facilities.',

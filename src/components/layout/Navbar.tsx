@@ -54,13 +54,13 @@ export function Navbar() {
     >
       <nav className="container mx-auto px-4 h-full flex items-center justify-between" aria-label="Main navigation">
         {/* Logo */}
-        <Link href="#home" className="flex items-center gap-2 text-xl font-bold gradient-text" aria-label="Sharair Portfolio Home">
+        <Link href="#home" className="flex items-center gap-2 text-xl font-bold gradient-text" aria-label="Shariar Portfolio Home">
           <svg className="h-8 w-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="2" />
             <path d="M16 8V24M8 16H24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             <circle cx="16" cy="16" r="6" stroke="currentColor" strokeWidth="1.5" />
           </svg>
-          <span className="hidden sm:block">Sharair</span>
+          <span className="hidden sm:block">Shariar</span>
         </Link>
 
         {/* Desktop Navigation */}

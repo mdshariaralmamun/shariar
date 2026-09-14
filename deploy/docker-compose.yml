@@ -1,0 +1,30 @@
+# shariar.dev portfolio — VPS deployment
+# Runs on the VPS at /opt/shariar-portfolio.
+# nginx-proxy-manager already forwards shariar.dev + www.shariar.dev -> 127.0.0.1:3002
+# with valid Let's Encrypt certs, so this publishes the container on host port 3002.
+#
+# Auto-update: GitHub Actions builds & pushes ghcr.io/mdshariaralmamun/shariar:latest
+# on every push to main; Watchtower polls GHCR every 5 minutes and redeploys
+# (scoped by label — it will NOT touch other containers on this VPS).
+
+services:
+  portfolio:
+    image: ghcr.io/mdshariaralmamun/shariar:latest
+    container_name: shariar-portfolio
+    restart: unless-stopped
+    ports:
+      - '3002:3000'
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: shariar-watchtower
+    restart: unless-stopped
+    environment:
+      - WATCHTOWER_LABEL_ENABLE=true
+      - WATCHTOWER_INTERVAL=300
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_ROLLING_RESTART=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

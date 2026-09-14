@@ -10,10 +10,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://sharair.dev'),
+  metadataBase: new URL('https://shariar.dev'),
   title: {
     default: 'Mohammed Sharair All Mamun | High-Purity Piping Specialist',
-    template: '%s | Sharair Portfolio',
+    template: '%s | Shariar Portfolio',
   },
   description: 'High-Purity Piping Specialist & Orbital Welding QA/QC Technician with 15+ years experience in UHP gas distribution, cleanroom design, and semiconductor tool installations for world-class research facilities.',
   keywords: [
@@ -30,13 +30,13 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Mohammed Sharair All Mamun' }],
   creator: 'Mohammed Sharair All Mamun',
-  publisher: 'Sharair Portfolio',
+  publisher: 'Shariar Portfolio',
   robots: 'index, follow',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://sharair.dev',
-    siteName: 'Sharair Portfolio',
+    url: 'https://shariar.dev',
+    siteName: 'Shariar Portfolio',
     title: 'Mohammed Sharair All Mamun | High-Purity Piping Specialist',
     description: 'High-Purity Piping Specialist & Orbital Welding QA/QC Technician with 15+ years experience in UHP gas distribution, cleanroom design, and semiconductor tool installations.',
     images: [
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Sharair Portfolio - UHP Piping Specialist',
+        alt: 'Shariar Portfolio - UHP Piping Specialist',
       },
     ],
   },
